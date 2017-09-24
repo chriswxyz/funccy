@@ -1,10 +1,31 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Funccy.Test
 {
     [TestClass]
     public class MaybeTests
     {
+
+        [TestMethod]
+        public void Maybe_Test()
+        {
+            var values = new[]
+            {
+                new Maybe<string>("hello"),
+                new Maybe<string>()
+            };
+
+            var results = values
+                .Map(x => $"{x} world!")
+                .Extract("no value")
+                .ToArray()
+                ;
+            
+            Assert.AreEqual("hello world!", results[0]);
+            Assert.AreEqual("no value", results[1]);
+        }
+
         [TestMethod]
         public void Maybe_ObeysRule_Identity()
         {
@@ -19,8 +40,8 @@ namespace Funccy.Test
         {
             var m = new Maybe<string>("hello");
 
-            var f = _.F((string x) => x + "f");
-            var g = _.F((string x) => x + "g");
+            string f(string x) => x + "f";
+            string g(string x) => x + "g";
 
             var one = m.Map(x => f(g(x)));
             var two = m.Map(g).Map(f);
@@ -34,7 +55,7 @@ namespace Funccy.Test
             var str = "hello";
             var m = new Maybe<string>(str);
 
-            var f = _.F((string x) => new Maybe<string>(x + "f"));
+            Maybe<string> f(string x) => new Maybe<string>(x + "f");
 
             var one = m.Bind(f);
             var two = f(str);

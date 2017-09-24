@@ -28,7 +28,7 @@ namespace Funccy
             _ex = ex;
             _hasEx = true;
         }
-
+        
         /// <summary>
         /// Tries an operation and returns the result or the caught exception.
         /// </summary>

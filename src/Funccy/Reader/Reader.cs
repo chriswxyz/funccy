@@ -43,12 +43,12 @@ namespace Funccy
             return Bind((state, value) => new Reader<TState, TNext>(state, f(state, value)));
         }
 
-        public TValue Unwrap()
+        public TValue Extract()
         {
             return _value;
         }
 
-        public TResult Unwrap<TResult>(Func<TState, TResult> f)
+        public TResult Extract<TResult>(Func<TState, TResult> f)
         {
             return f(_state);
         }
