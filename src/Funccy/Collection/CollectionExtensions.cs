@@ -40,14 +40,11 @@ namespace Funccy
         public static string StringJoin<T>(this IEnumerable<T> coll, string separator)
         {
             return string.Join(separator, coll);
-        }
+        }        
 
         public static void ForEach<T>(this IEnumerable<T> coll, Action<T> a)
         {
-            foreach(var i in coll)
-            {
-                a(i);
-            }
+            foreach (var i in coll) { a(i); }
         }
     }
 }

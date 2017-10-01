@@ -9,8 +9,124 @@ namespace Funccy
     /// An immutable list that always has at least one element.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface INonemptyList<T> : IImmutableList<T>
+    public interface INonemptyList<T> : IEnumerable<T>, IEnumerable, IReadOnlyCollection<T>
     {
+        /// <summary>
+        /// Gets the value at index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        T this[int index] { get; }
+
+        /// <summary>
+        /// Finds the index of a value.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="index"></param>
+        /// <param name="count"></param>
+        /// <param name="equalityComparer"></param>
+        /// <returns></returns>
+        int IndexOf(T item, int index, int count, IEqualityComparer<T> equalityComparer);
+
+        /// <summary>
+        /// Finds the last index of a value.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="index"></param>
+        /// <param name="count"></param>
+        /// <param name="equalityComparer"></param>
+        /// <returns></returns>
+        int LastIndexOf(T item, int index, int count, IEqualityComparer<T> equalityComparer);
+
+        /// <summary>
+        /// Adds a value to the list.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        INonemptyList<T> Add(T value);
+
+        /// <summary>
+        /// Adds values to the list.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        INonemptyList<T> AddRange(IEnumerable<T> items);
+
+        /// <summary>
+        /// Inserts a value at index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        INonemptyList<T> Insert(int index, T element);
+
+        /// <summary>
+        /// Inserts values at index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        INonemptyList<T> InsertRange(int index, IEnumerable<T> items);
+
+        /// <summary>
+        /// Replaces the value at index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        INonemptyList<T> SetItem(int index, T value);
+
+        /// <summary>
+        /// Replaces the first matching value in the list.
+        /// </summary>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
+        /// <param name="equalityComparer"></param>
+        /// <returns></returns>
+        INonemptyList<T> Replace(T oldValue, T newValue, IEqualityComparer<T> equalityComparer);
+
+        /// <summary>
+        /// Removes the first instance of the value.
+        /// Removal of items is not guaranteed to result in another nonempty list.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="equalityComparer"></param>
+        /// <returns></returns>
+        IImmutableList<T> Remove(T value, IEqualityComparer<T> equalityComparer);
+
+        /// <summary>
+        /// Removes all instances matching the predicate.
+        /// Removal of items is not guaranteed to result in another nonempty list.
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
+        IImmutableList<T> RemoveAll(Predicate<T> match);
+
+        /// <summary>
+        /// Removes all instances matching the given items.
+        /// Removal of items is not guaranteed to result in another nonempty list.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <param name="equalityComparer"></param>
+        /// <returns></returns>
+        IImmutableList<T> RemoveRange(IEnumerable<T> items, IEqualityComparer<T> equalityComparer);
+
+        /// <summary>
+        /// Removes count values starting at index.
+        /// Removal of items is not guaranteed to result in another nonempty list.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        IImmutableList<T> RemoveRange(int index, int count);
+
+        /// <summary>
+        /// Removes the value at index.
+        /// Removal of items is not guaranteed to result in another nonempty list.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        IImmutableList<T> RemoveAt(int index);
     }
 
     /// <summary>
@@ -39,11 +155,6 @@ namespace Funccy
                 .AddRange(rest);
         }
 
-        public IImmutableList<T> Clear()
-        {
-            return _list.Clear();
-        }
-
         public int IndexOf(T item, int index, int count, IEqualityComparer<T> equalityComparer)
         {
             return _list.IndexOf(item, index, count, equalityComparer);
@@ -54,24 +165,32 @@ namespace Funccy
             return _list.LastIndexOf(item, index, count, equalityComparer);
         }
 
-        public IImmutableList<T> Add(T value)
+        public INonemptyList<T> Add(T value)
         {
-            return _list.Add(value);
+            return _list.Add(value)
+                .AsNonemptyList()
+                .Extract(() => throw new InvalidOperationException());
         }
 
-        public IImmutableList<T> AddRange(IEnumerable<T> items)
+        public INonemptyList<T> AddRange(IEnumerable<T> items)
         {
-            return _list.AddRange(items);
+            return _list.AddRange(items)
+                .AsNonemptyList()
+                .Extract(() => throw new InvalidOperationException());
         }
 
-        public IImmutableList<T> Insert(int index, T element)
+        public INonemptyList<T> Insert(int index, T element)
         {
-            return _list.Insert(index, element);
+            return _list.Insert(index, element)
+                .AsNonemptyList()
+                .Extract(() => throw new InvalidOperationException());
         }
 
-        public IImmutableList<T> InsertRange(int index, IEnumerable<T> items)
+        public INonemptyList<T> InsertRange(int index, IEnumerable<T> items)
         {
-            return _list.InsertRange(index, items);
+            return _list.InsertRange(index, items)
+                .AsNonemptyList()
+                .Extract(() => throw new InvalidOperationException());
         }
 
         public IImmutableList<T> Remove(T value, IEqualityComparer<T> equalityComparer)
@@ -99,14 +218,18 @@ namespace Funccy
             return _list.RemoveAt(index);
         }
 
-        public IImmutableList<T> SetItem(int index, T value)
+        public INonemptyList<T> SetItem(int index, T value)
         {
-            return _list.SetItem(index, value);
+            return _list.SetItem(index, value)
+                .AsNonemptyList()
+                .Extract(() => throw new InvalidOperationException());
         }
 
-        public IImmutableList<T> Replace(T oldValue, T newValue, IEqualityComparer<T> equalityComparer)
+        public INonemptyList<T> Replace(T oldValue, T newValue, IEqualityComparer<T> equalityComparer)
         {
-            return _list.Replace(oldValue, newValue, equalityComparer);
+            return _list.Replace(oldValue, newValue, equalityComparer)
+                .AsNonemptyList()
+                .Extract(() => throw new InvalidOperationException());
         }
 
         public IEnumerator<T> GetEnumerator()

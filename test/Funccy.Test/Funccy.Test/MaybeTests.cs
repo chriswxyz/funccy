@@ -21,7 +21,7 @@ namespace Funccy.Test
                 .Extract("no value")
                 .ToArray()
                 ;
-            
+
             Assert.AreEqual("hello world!", results[0]);
             Assert.AreEqual("no value", results[1]);
         }
