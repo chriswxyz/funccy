@@ -14,7 +14,8 @@ namespace FunccyTests
 
             string logValue(int x) => $"value is {x}";
 
-            var (result, logs) =  LogExtensions.AsLog<int, string>(123)                
+            var (result, logs) =  Funccy
+                .LogExtensions.AsLog<int, string>(123)                
                 .Map(x => x + 543)
                 .Add(logValue)
                 .Map(x => x + 333)
