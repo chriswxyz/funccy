@@ -1,7 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Funccy;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace Funccy.Test
+namespace FunccyTests
 {
     [TestClass]
     public class MaybeTests

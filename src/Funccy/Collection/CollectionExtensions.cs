@@ -46,5 +46,24 @@ namespace Funccy
         {
             foreach (var i in coll) { a(i); }
         }
+
+        /// <summary>
+        /// Call a function inline.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="value"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static U Chain<T, U>(this T value, Func<T, U> f) { return f(value); }
+
+        public static async Task<IEnumerable<T>> WhereAsync<T>(this IEnumerable<T> coll, Func<T, Task<bool>> f)
+        {
+            async Task<(bool match, T item)> Check(T model) => (await f(model), model);
+
+            var tasks = await coll.Select(Check).WhenAll();
+
+            return tasks.Where(x => x.match).Select(x => x.item);
+        }
     }
 }
