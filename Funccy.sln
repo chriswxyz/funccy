@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Funccy", "src\Funccy\Funccy
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{F36F7946-228C-41A4-9FAB-5588927F9AC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunccyTests", "test\FunccyTests\FunccyTests.csproj", "{FF09F2B7-565C-4CE2-9251-E4EBE913518B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,10 +17,6 @@ Global
 		{A2B0B650-1B0D-45FA-9161-FFB8BCB82D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2B0B650-1B0D-45FA-9161-FFB8BCB82D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2B0B650-1B0D-45FA-9161-FFB8BCB82D79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF09F2B7-565C-4CE2-9251-E4EBE913518B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF09F2B7-565C-4CE2-9251-E4EBE913518B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF09F2B7-565C-4CE2-9251-E4EBE913518B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF09F2B7-565C-4CE2-9251-E4EBE913518B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
