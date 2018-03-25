@@ -14,10 +14,15 @@ namespace Funccy
         /// <returns></returns>
         public static Maybe<T> FirstMaybe<T>(this IEnumerable<T> coll)
         {
-            var first = coll.FirstOrDefault();
-            return first != null
-                ? new Maybe<T>(first)
-                : new Maybe<T>();
+            return coll
+                .AsCatch()
+                .Handle<InvalidOperationException>()
+                .Extract(x => x.First())
+                .Extract(
+                    ok => new Maybe<T>(ok),
+                    err => new Maybe<T>()
+                )
+                ;
         }
 
         /// <summary>
@@ -28,10 +33,15 @@ namespace Funccy
         /// <returns></returns>
         public static Maybe<T> FirstMaybe<T>(this IEnumerable<T> coll, Func<T, bool> f)
         {
-            var first = coll.FirstOrDefault(f);
-            return first != null
-                ? new Maybe<T>(first)
-                : new Maybe<T>();
+            return coll
+                .AsCatch()
+                .Handle<InvalidOperationException>()
+                .Extract(x => x.First(f))
+                .Extract(
+                    ok => new Maybe<T>(ok),
+                    err => new Maybe<T>()
+                )
+                ;
         }
 
         /// <summary>
@@ -42,10 +52,15 @@ namespace Funccy
         /// <returns></returns>
         public static Maybe<T> SingleMaybe<T>(this IEnumerable<T> coll)
         {
-            var single = coll.SingleOrDefault();
-            return single != null
-                ? new Maybe<T>(single)
-                : new Maybe<T>();
+            return coll
+                .AsCatch()
+                .Handle<InvalidOperationException>()
+                .Extract(x => x.Single())
+                .Extract(
+                    ok => new Maybe<T>(ok),
+                    err => new Maybe<T>()
+                )
+                ;
         }
 
         /// <summary>
@@ -56,10 +71,15 @@ namespace Funccy
         /// <returns></returns>
         public static Maybe<T> SingleMaybe<T>(this IEnumerable<T> coll, Func<T, bool> f)
         {
-            var single = coll.SingleOrDefault(f);
-            return single != null
-                ? new Maybe<T>(single)
-                : new Maybe<T>();
+            return coll
+                .AsCatch()
+                .Handle<InvalidOperationException>()
+                .Extract(x => x.Single(f))
+                .Extract(
+                    ok => new Maybe<T>(ok),
+                    err => new Maybe<T>()
+                )
+                ;
         }
 
         /// <summary>
