@@ -72,5 +72,32 @@ namespace FunccyTests
 
             Assert.AreEqual(m, m2);
         }
+        
+        bool HasValue<T>(Maybe<T> m) => m.Map(x => true).Extract(false);
+
+        [TestMethod]
+        public void Maybe_SingleMaybe_ReturnsNone()
+        {
+            var vals = new[] { 1, 2, 3 };
+
+            var none1 = vals.SingleMaybe();
+            var none2 = vals.SingleMaybe(x => x > 4);
+
+            Assert.IsFalse(HasValue(none1));
+            Assert.IsFalse(HasValue(none2));
+        }
+
+        [TestMethod]
+        public void Maybe_SingleMaybe_ReturnsSome()
+        {
+            var vals1 = new[] { 1 };
+            var some1 = vals1.SingleMaybe();
+
+            var vals2 = new[] { 1, 2, 4 };
+            var some2 = vals2.SingleMaybe(x => x > 3);
+
+            Assert.IsTrue(HasValue(some1));
+            Assert.IsTrue(HasValue(some2));
+        }
     }
 }
