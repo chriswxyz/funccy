@@ -1,14 +1,14 @@
 ﻿namespace Funccy
 {
-    public class Problem
+    public class Problem<TErr>
     {
-        public Problem(string key, string desc)
+        public Problem(string key, TErr desc)
         {
             Key = key;
             Description = desc;
         }
 
         public string Key { get; }
-        public string Description { get; }
+        public TErr Description { get; }
     }
 }

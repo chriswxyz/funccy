@@ -18,7 +18,7 @@ namespace Funccy
         {
             var valueObject = obj as ValueObject<T>;
 
-            if (ReferenceEquals(valueObject, null))
+            if (valueObject is null)
             {
                 return false;
             }
@@ -46,10 +46,10 @@ namespace Funccy
 
         public static bool operator ==(ValueObject<T> a, ValueObject<T> b)
         {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            if (a is null && b is null)
                 return true;
 
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
                 return false;
 
             return a.Equals(b);
