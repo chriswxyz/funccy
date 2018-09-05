@@ -21,12 +21,17 @@ namespace FunccyTests
                 .WithRule(
                     x => CheckWithServer(x),
                     x => new ExampleErrorModel(107, "Remote service did not accept"))
+                .WithRule(
+                    x => x.Contains("hello"),
+                    x => !x.Contains("goodbye"),
+                    x => new ExampleErrorModel(113, "Hello message cannot contain goodbyes"))
                 ;
 
             var values = new[] {
                 "hello world",
                 "helloxx worldxx",
-                "it's your world, you can put whatever you want in it"
+                "it's your world, you can put whatever you want in it",
+                "hello goodbye"
             };
 
             var results = (await validator
@@ -37,6 +42,7 @@ namespace FunccyTests
             Assert.AreEqual("hello world", results[0]);
             Assert.AreEqual("(100) Has an x at position 5", results[1]);
             Assert.AreEqual("(102) Length was 52, (107) Remote service did not accept", results[2]);
+            Assert.AreEqual("(113) Hello message cannot contain goodbyes", results[3]);
         }
 
         public class ExampleErrorModel
