@@ -1,0 +1,33 @@
+﻿<#@ template language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core" #>
+<# 
+Type[] types = new[] {
+	typeof(short), typeof(ushort), 
+	typeof(int), typeof(uint), 
+	typeof(long), typeof(ulong), 
+	typeof(float), typeof(double), typeof(decimal)
+};
+#>
+/* This is a generated file. */
+
+using System;
+
+namespace Funccy
+{
+	public static class NumberExtensions
+	{
+<# foreach (var type in types) { #>
+		public static bool IsNear(this <#= type.Name #> source, <#= type.Name #> target, <#= type.Name #> tolerance)
+		{
+			var upper = target + tolerance;
+			var lower = target - tolerance;
+		
+			if(source > upper){ return false; }
+			if(source < lower){ return false; }
+			return true;
+		}
+
+<# } #>
+	}
+}
