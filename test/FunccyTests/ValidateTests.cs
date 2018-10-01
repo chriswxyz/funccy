@@ -12,16 +12,16 @@ namespace FunccyTests
         public async Task Validate_Test()
         {
             var validator = new Validate<string, ExampleErrorModel>()
-                .WithRule(
+                .Must(
                     x => !x.Any(c => c == 'x'),
                     x => new ExampleErrorModel(100, $"Has an x at position {x.IndexOf('x')}"))
-                .WithRule(
+                .Must(
                     x => x.Length < 20,
                     x => new ExampleErrorModel(102, $"Length was {x.Length}"))
-                .WithRule(
+                .Must(
                     x => CheckWithServer(x),
                     x => new ExampleErrorModel(107, "Remote service did not accept"))
-                .WithRule(
+                .Must(
                     x => x.Contains("hello"),
                     x => !x.Contains("goodbye"),
                     x => new ExampleErrorModel(113, "Hello message cannot contain goodbyes"))
