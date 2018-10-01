@@ -43,11 +43,13 @@ namespace Funccy
             {
                 await _time.WaitAsync(cancel);
 
+                var val = action();
+
                 await Task.Delay(_timeSpan);
 
                 _time.Release(1);
 
-                return action();
+                return val;
             }
             finally
             {
