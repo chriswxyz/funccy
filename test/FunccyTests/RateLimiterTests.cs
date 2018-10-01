@@ -27,17 +27,17 @@ namespace FunccyTests
             
             stopwatch.Stop();
 
-            Assert.IsTrue(results[0].IsNear(1000, 100));
-            Assert.IsTrue(results[1].IsNear(1000, 100));
-            Assert.IsTrue(results[2].IsNear(1000, 100));
+            Assert.IsTrue(results[0].IsNear(0, 100));
+            Assert.IsTrue(results[1].IsNear(0, 100));
+            Assert.IsTrue(results[2].IsNear(0, 100));
 
-            Assert.IsTrue(results[3].IsNear(2000, 100));
-            Assert.IsTrue(results[4].IsNear(2000, 100));
-            Assert.IsTrue(results[5].IsNear(2000, 100));
+            Assert.IsTrue(results[3].IsNear(1000, 100));
+            Assert.IsTrue(results[4].IsNear(1000, 100));
+            Assert.IsTrue(results[5].IsNear(1000, 100));
 
-            Assert.IsTrue(results[6].IsNear(3000, 100));
-            Assert.IsTrue(results[7].IsNear(3000, 100));
-            Assert.IsTrue(results[8].IsNear(3000, 100));
+            Assert.IsTrue(results[6].IsNear(2000, 100));
+            Assert.IsTrue(results[7].IsNear(2000, 100));
+            Assert.IsTrue(results[8].IsNear(2000, 100));
         }
     }
 }
