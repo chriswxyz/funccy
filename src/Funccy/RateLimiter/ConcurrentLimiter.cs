@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,11 +7,8 @@ namespace Funccy
     /// <summary>
     /// Limits the amount of actions run in a certain time span.
     /// </summary>
-    public class RateLimiter : ILimiter
+    public class ConcurrentLimiter : ILimiter
     {
-        // inspired by https://codereview.stackexchange.com/questions/87132/throttle-actions-by-number-per-period
-        private readonly TimeSpan _timeSpan;
-
         // Some facts about SemaphoreSlim:
         // 1. The constructor signature means (available resources, max resources)
         // 2. They're IDisposable, but only the AvailableWaitHandle prop
@@ -21,13 +16,10 @@ namespace Funccy
         // See https://stackoverflow.com/questions/32033416/do-i-need-to-dispose-a-semaphoreslim/39195920#39195920
         // 3. They're runtime level, not OS level.
         private readonly SemaphoreSlim _actions;
-        private readonly SemaphoreSlim _time;
 
-        public RateLimiter(int actions, TimeSpan timeSpan)
+        public ConcurrentLimiter(int actions)
         {
             _actions = new SemaphoreSlim(actions, actions);
-            _time = new SemaphoreSlim(actions, actions);
-            _timeSpan = timeSpan;
         }
 
         public async Task<T> Run<T>(Func<T> action)
@@ -41,15 +33,7 @@ namespace Funccy
 
             try
             {
-                await _time.WaitAsync(cancel);
-
-                var val = action();
-
-                await Task.Delay(_timeSpan);
-
-                _time.Release(1);
-
-                return val;
+                return action();
             }
             finally
             {
@@ -68,12 +52,6 @@ namespace Funccy
 
             try
             {
-                await _time.WaitAsync(cancel);
-
-                await Task.Delay(_timeSpan);
-
-                _time.Release(1);
-
                 return await action();
             }
             finally
