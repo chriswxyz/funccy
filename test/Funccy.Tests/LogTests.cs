@@ -1,20 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Funccy;
+using Xunit;
 
 namespace FunccyTests
 {
-    [TestClass]
     public class LogTests
     {
-        [TestMethod]
+        [Fact]
         public void Log_Test()
         {
             var _logger = new TestLogger();
 
             string logValue(int x) => $"value is {x}";
 
-            var (result, logs) =  123
+            var (result, logs) = 123
                 .AsLog<int, string>()
                 .Map(x => x + 543)
                 .Add(logValue)
@@ -25,8 +24,8 @@ namespace FunccyTests
 
             logs.ForEach(_logger.Info);
 
-            Assert.AreEqual(999, result);
-            Assert.AreEqual("value is 666, value is 999", _logger.Log);
+            Assert.Equal(999, result);
+            Assert.Equal("value is 666, value is 999", _logger.Log);
         }
     }
 

@@ -3,14 +3,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Funccy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace FunccyTests
 {
-    [TestClass]
     public class RateLimiterTests
     {
-        [TestMethod]
+        [Fact]
         public async Task RateLimiterLimitsRate()
         {
             var stopwatch = new Stopwatch();
@@ -24,20 +23,20 @@ namespace FunccyTests
             var results = await nums.Select(
                 x => stopwatch.ElapsedMilliseconds,
                 limiter);
-            
+
             stopwatch.Stop();
 
-            Assert.IsTrue(results[0].IsNear(0, 100));
-            Assert.IsTrue(results[1].IsNear(0, 100));
-            Assert.IsTrue(results[2].IsNear(0, 100));
+            Assert.True(results[0].IsNear(0, 100));
+            Assert.True(results[1].IsNear(0, 100));
+            Assert.True(results[2].IsNear(0, 100));
 
-            Assert.IsTrue(results[3].IsNear(1000, 100));
-            Assert.IsTrue(results[4].IsNear(1000, 100));
-            Assert.IsTrue(results[5].IsNear(1000, 100));
+            Assert.True(results[3].IsNear(1000, 100));
+            Assert.True(results[4].IsNear(1000, 100));
+            Assert.True(results[5].IsNear(1000, 100));
 
-            Assert.IsTrue(results[6].IsNear(2000, 100));
-            Assert.IsTrue(results[7].IsNear(2000, 100));
-            Assert.IsTrue(results[8].IsNear(2000, 100));
+            Assert.True(results[6].IsNear(2000, 100));
+            Assert.True(results[7].IsNear(2000, 100));
+            Assert.True(results[8].IsNear(2000, 100));
         }
     }
 }
