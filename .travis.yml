@@ -1,2 +1,6 @@
 language: csharp
 solution: Funccy.sln
+mono: none
+dotnet: 2.1.5
+script:
+    - dotnet restore
