@@ -1,14 +1,13 @@
 ﻿using Funccy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace FunccyTests
 {
-    [TestClass]
     public class ValidateTests
     {
-        [TestMethod]
+        [Fact]
         public async Task Validate_Test()
         {
             var validator = new Validate<string, ExampleErrorModel>()
@@ -39,10 +38,10 @@ namespace FunccyTests
                 .Select(GetValueOrProblemSummary)
                 .ToArray();
 
-            Assert.AreEqual("hello world", results[0]);
-            Assert.AreEqual("(100) Has an x at position 5", results[1]);
-            Assert.AreEqual("(102) Length was 52, (107) Remote service did not accept", results[2]);
-            Assert.AreEqual("(113) Hello message cannot contain goodbyes", results[3]);
+            Assert.Equal("hello world", results[0]);
+            Assert.Equal("(100) Has an x at position 5", results[1]);
+            Assert.Equal("(102) Length was 52, (107) Remote service did not accept", results[2]);
+            Assert.Equal("(113) Hello message cannot contain goodbyes", results[3]);
         }
 
         public class ExampleErrorModel
@@ -62,7 +61,7 @@ namespace FunccyTests
             // pretend to check something remotely
             return Task.FromResult(!input.Contains("whatever"));
         }
-        
+
         public static string GetValueOrProblemSummary(OneOf<string, ExampleErrorModel[]> result)
         {
             return result.Extract(
