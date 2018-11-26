@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace FunccyTests
+namespace Funccy.Tests
 {
     public class ValidateTests
     {
