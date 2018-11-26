@@ -61,11 +61,11 @@ namespace FunccyTests
 
             stopwatch.Stop();
 
-            Assert.IsTrue(results[0].IsNear(0, 100));
-            Assert.IsTrue(results[1].IsNear(0, 100));
-            Assert.IsTrue(results[2].IsNear(0, 100));
+            Assert.True(results[0].IsNear(0, 100));
+            Assert.True(results[1].IsNear(0, 100));
+            Assert.True(results[2].IsNear(0, 100));
 
-            Assert.IsTrue(results[3].IsNear(500, 100));
+            Assert.True(results[3].IsNear(500, 100));
         }
     }
 }
