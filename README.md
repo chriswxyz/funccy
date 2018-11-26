@@ -1,7 +1,7 @@
 # funccy
 Functional data structures for C#
 
-[![build status](https://www.myget.org/BuildSource/Badge/chriswxyz-dev?identifier=8bf26e10-7e21-4af2-899c-569e5db180c8)](https://www.myget.org/feed/chriswxyz-dev/package/nuget/Funccy)
+[![Build status](https://ci.appveyor.com/api/projects/status/wd37xvmd66pw7992?svg=true)](https://ci.appveyor.com/project/chriswxyz/funccy) [![Build status](https://ci.appveyor.com/api/projects/status/wd37xvmd66pw7992/branch/master?svg=true)](https://ci.appveyor.com/project/chriswxyz/funccy/branch/master) [![chriswxyz-dev MyGet Build Status](https://www.myget.org/BuildSource/Badge/chriswxyz-dev?identifier=b3b1d0e3-8ea9-4d08-bcec-5d398470e60f)](https://www.myget.org/) 
 
 ## Why?
 Functional code helps you fall into the pit of success! When it's easier to do the right thing than 
