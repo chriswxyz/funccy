@@ -46,7 +46,7 @@ namespace Funccy
         /// <param name="pred"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public Validate<TData, TErr> WithRule(
+        public Validate<TData, TErr> Must(
             Func<TData, bool> pred,
             Func<TData, TErr> description)
         {
@@ -61,7 +61,7 @@ namespace Funccy
         /// <param name="pred"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public Validate<TData, TErr> WithRule(
+        public Validate<TData, TErr> Must(
             Func<TData, Task<bool>> pred,
             Func<TData, TErr> description)
         {
@@ -77,7 +77,7 @@ namespace Funccy
         /// <param name="pred"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public Validate<TData, TErr> WithRule(
+        public Validate<TData, TErr> Must(
             Func<TData, bool> condition,
             Func<TData, bool> pred,
             Func<TData, TErr> description)
@@ -94,7 +94,7 @@ namespace Funccy
         /// <param name="pred"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public Validate<TData, TErr> WithRule(
+        public Validate<TData, TErr> Must(
             Func<TData, bool> condition,
             Func<TData, Task<bool>> pred,
             Func<TData, TErr> description)
