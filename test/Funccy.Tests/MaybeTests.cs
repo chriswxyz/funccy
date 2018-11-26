@@ -1,14 +1,12 @@
 ﻿using Funccy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Xunit;
 
 namespace FunccyTests
 {
-    [TestClass]
     public class MaybeTests
     {
-
-        [TestMethod]
+        [Fact]
         public void Maybe_Test()
         {
             var values = new[]
@@ -23,20 +21,20 @@ namespace FunccyTests
                 .ToArray()
                 ;
 
-            Assert.AreEqual("hello world!", results[0]);
-            Assert.AreEqual("no value", results[1]);
+            Assert.Equal("hello world!", results[0]);
+            Assert.Equal("no value", results[1]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Maybe_ObeysRule_Identity()
         {
             var m = new Maybe<string>("hello");
             var m2 = m.Map(x => x);
 
-            Assert.AreEqual(m, m2);
+            Assert.Equal(m, m2);
         }
 
-        [TestMethod]
+        [Fact]
         public void Maybe_ObeysRule_Composition()
         {
             var m = new Maybe<string>("hello");
@@ -47,10 +45,10 @@ namespace FunccyTests
             var one = m.Map(x => f(g(x)));
             var two = m.Map(g).Map(f);
 
-            Assert.AreEqual(one, two);
+            Assert.Equal(one, two);
         }
 
-        [TestMethod]
+        [Fact]
         public void Maybe_ObeysRule_LeftIdentity()
         {
             var str = "hello";
@@ -61,21 +59,21 @@ namespace FunccyTests
             var one = m.Bind(f);
             var two = f(str);
 
-            Assert.AreEqual(one, two);
+            Assert.Equal(one, two);
         }
 
-        [TestMethod]
+        [Fact]
         public void Maybe_ObeysRule_RightIdentity()
         {
             var m = new Maybe<string>("hello");
             var m2 = m.Bind(x => new Maybe<string>(x));
 
-            Assert.AreEqual(m, m2);
+            Assert.Equal(m, m2);
         }
-        
+
         bool HasValue<T>(Maybe<T> m) => m.Map(x => true).Extract(false);
 
-        [TestMethod]
+        [Fact]
         public void Maybe_SingleMaybe_ReturnsNone()
         {
             var vals = new[] { 1, 2, 3 };
@@ -83,11 +81,11 @@ namespace FunccyTests
             var none1 = vals.SingleMaybe();
             var none2 = vals.SingleMaybe(x => x > 4);
 
-            Assert.IsFalse(HasValue(none1));
-            Assert.IsFalse(HasValue(none2));
+            Assert.False(HasValue(none1));
+            Assert.False(HasValue(none2));
         }
 
-        [TestMethod]
+        [Fact]
         public void Maybe_SingleMaybe_ReturnsSome()
         {
             var vals1 = new[] { 1 };
@@ -96,8 +94,8 @@ namespace FunccyTests
             var vals2 = new[] { 1, 2, 4 };
             var some2 = vals2.SingleMaybe(x => x > 3);
 
-            Assert.IsTrue(HasValue(some1));
-            Assert.IsTrue(HasValue(some2));
+            Assert.True(HasValue(some1));
+            Assert.True(HasValue(some2));
         }
     }
 }
