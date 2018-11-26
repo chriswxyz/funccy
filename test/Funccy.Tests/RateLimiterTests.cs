@@ -39,7 +39,7 @@ namespace FunccyTests
             Assert.True(results[8].IsNear(2000, 100));
         }
 
-        [TestMethod]
+        [Fact]
         public async Task ConcurrentLimiterLimitsConcurrency()
         {
             var stopwatch = new Stopwatch();
