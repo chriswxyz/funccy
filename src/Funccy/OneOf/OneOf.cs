@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Funccy
 {
@@ -267,4 +268,147 @@ namespace Funccy
 		}
 	}
 
+
+	public static class OneOfExtensions {
+
+        /// <summary>
+        /// Maps a function after awaiting the previous result.
+        /// </summary>
+		public static OneOf<Task<TANext>, Task<TBNext>> Map<TA, TB, TANext, TBNext>(
+			this OneOf<Task<TA>, Task<TB>> oneOf,
+            Func<TA, TANext> fA,
+            Func<TB, TBNext> fB)
+			{
+				return oneOf.Map(
+                    async x => fA(await x),
+                    async x => fB(await x)
+				);
+			}
+
+        /// <summary>
+        /// Extracts a value after awaiting the previous result.
+        /// </summary>
+		public static Task<TResult> Extract<TA, TB, TResult>(
+			this OneOf<Task<TA>, Task<TB>> oneOf,
+            Func<TA, TResult> fA,
+            Func<TB, TResult> fB
+				)
+			{
+				return oneOf.Extract(
+                    async x => fA(await x),
+                    async x => fB(await x)
+				);
+			}
+
+        /// <summary>
+        /// Maps a function after awaiting the previous result.
+        /// </summary>
+		public static OneOf<Task<TANext>, Task<TBNext>, Task<TCNext>> Map<TA, TB, TC, TANext, TBNext, TCNext>(
+			this OneOf<Task<TA>, Task<TB>, Task<TC>> oneOf,
+            Func<TA, TANext> fA,
+            Func<TB, TBNext> fB,
+            Func<TC, TCNext> fC)
+			{
+				return oneOf.Map(
+                    async x => fA(await x),
+                    async x => fB(await x),
+                    async x => fC(await x)
+				);
+			}
+
+        /// <summary>
+        /// Extracts a value after awaiting the previous result.
+        /// </summary>
+		public static Task<TResult> Extract<TA, TB, TC, TResult>(
+			this OneOf<Task<TA>, Task<TB>, Task<TC>> oneOf,
+            Func<TA, TResult> fA,
+            Func<TB, TResult> fB,
+            Func<TC, TResult> fC
+				)
+			{
+				return oneOf.Extract(
+                    async x => fA(await x),
+                    async x => fB(await x),
+                    async x => fC(await x)
+				);
+			}
+
+        /// <summary>
+        /// Maps a function after awaiting the previous result.
+        /// </summary>
+		public static OneOf<Task<TANext>, Task<TBNext>, Task<TCNext>, Task<TDNext>> Map<TA, TB, TC, TD, TANext, TBNext, TCNext, TDNext>(
+			this OneOf<Task<TA>, Task<TB>, Task<TC>, Task<TD>> oneOf,
+            Func<TA, TANext> fA,
+            Func<TB, TBNext> fB,
+            Func<TC, TCNext> fC,
+            Func<TD, TDNext> fD)
+			{
+				return oneOf.Map(
+                    async x => fA(await x),
+                    async x => fB(await x),
+                    async x => fC(await x),
+                    async x => fD(await x)
+				);
+			}
+
+        /// <summary>
+        /// Extracts a value after awaiting the previous result.
+        /// </summary>
+		public static Task<TResult> Extract<TA, TB, TC, TD, TResult>(
+			this OneOf<Task<TA>, Task<TB>, Task<TC>, Task<TD>> oneOf,
+            Func<TA, TResult> fA,
+            Func<TB, TResult> fB,
+            Func<TC, TResult> fC,
+            Func<TD, TResult> fD
+				)
+			{
+				return oneOf.Extract(
+                    async x => fA(await x),
+                    async x => fB(await x),
+                    async x => fC(await x),
+                    async x => fD(await x)
+				);
+			}
+
+        /// <summary>
+        /// Maps a function after awaiting the previous result.
+        /// </summary>
+		public static OneOf<Task<TANext>, Task<TBNext>, Task<TCNext>, Task<TDNext>, Task<TENext>> Map<TA, TB, TC, TD, TE, TANext, TBNext, TCNext, TDNext, TENext>(
+			this OneOf<Task<TA>, Task<TB>, Task<TC>, Task<TD>, Task<TE>> oneOf,
+            Func<TA, TANext> fA,
+            Func<TB, TBNext> fB,
+            Func<TC, TCNext> fC,
+            Func<TD, TDNext> fD,
+            Func<TE, TENext> fE)
+			{
+				return oneOf.Map(
+                    async x => fA(await x),
+                    async x => fB(await x),
+                    async x => fC(await x),
+                    async x => fD(await x),
+                    async x => fE(await x)
+				);
+			}
+
+        /// <summary>
+        /// Extracts a value after awaiting the previous result.
+        /// </summary>
+		public static Task<TResult> Extract<TA, TB, TC, TD, TE, TResult>(
+			this OneOf<Task<TA>, Task<TB>, Task<TC>, Task<TD>, Task<TE>> oneOf,
+            Func<TA, TResult> fA,
+            Func<TB, TResult> fB,
+            Func<TC, TResult> fC,
+            Func<TD, TResult> fD,
+            Func<TE, TResult> fE
+				)
+			{
+				return oneOf.Extract(
+                    async x => fA(await x),
+                    async x => fB(await x),
+                    async x => fC(await x),
+                    async x => fD(await x),
+                    async x => fE(await x)
+				);
+			}
+		}
 }

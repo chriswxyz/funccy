@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Funccy;
 using Xunit;
 
-namespace FunccyTests
+namespace Funccy.Tests
 {
     public class LogTests
     {
@@ -22,7 +21,10 @@ namespace FunccyTests
                 .Extract()
                 ;
 
-            logs.ForEach(_logger.Info);
+            foreach (var log in logs)
+            {
+                _logger.Info(log);
+            }
 
             Assert.Equal(999, result);
             Assert.Equal("value is 666, value is 999", _logger.Log);

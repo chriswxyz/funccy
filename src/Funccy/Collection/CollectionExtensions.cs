@@ -40,11 +40,6 @@ namespace Funccy
         public static string StringJoin<T>(this IEnumerable<T> coll, string separator)
         {
             return string.Join(separator, coll);
-        }        
-
-        public static void ForEach<T>(this IEnumerable<T> coll, Action<T> a)
-        {
-            foreach (var i in coll) { a(i); }
         }
 
         /// <summary>
@@ -57,6 +52,13 @@ namespace Funccy
         /// <returns></returns>
         public static U Chain<T, U>(this T value, Func<T, U> f) { return f(value); }
 
+        /// <summary>
+        /// Filters a collection with an async predicate.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="coll"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
         public static async Task<IEnumerable<T>> WhereAsync<T>(this IEnumerable<T> coll, Func<T, Task<bool>> f)
         {
             async Task<(bool match, T item)> Check(T model) => (await f(model), model);

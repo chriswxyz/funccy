@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Funccy
 {
-    public static class OneOfExtensions
+    public static class OneOfExtensions2
     {
         /// <summary>
         /// Filters the elements of the collection where the value is type A.

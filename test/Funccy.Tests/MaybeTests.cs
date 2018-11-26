@@ -1,8 +1,7 @@
-﻿using Funccy;
-using System.Linq;
+﻿using System.Linq;
 using Xunit;
 
-namespace FunccyTests
+namespace Funccy.Tests
 {
     public class MaybeTests
     {
