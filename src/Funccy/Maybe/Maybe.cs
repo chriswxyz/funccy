@@ -42,7 +42,7 @@ namespace Funccy
                 ? f(_value)
                 : new Maybe<TNext>();
         }
-        
+
         /// <summary>
         /// Gets the value of the Maybe, or a default when there is no value.
         /// </summary>

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Funccy
+﻿namespace Funccy
 {
     public static class CatchExtensions
     {

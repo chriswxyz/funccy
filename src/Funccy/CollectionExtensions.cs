@@ -43,16 +43,6 @@ namespace Funccy
         }
 
         /// <summary>
-        /// Call a function inline.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="U"></typeparam>
-        /// <param name="value"></param>
-        /// <param name="f"></param>
-        /// <returns></returns>
-        public static U Chain<T, U>(this T value, Func<T, U> f) { return f(value); }
-
-        /// <summary>
         /// Filters a collection with an async predicate.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -66,6 +56,54 @@ namespace Funccy
             var tasks = await coll.Select(Check).WhenAll();
 
             return tasks.Where(x => x.match).Select(x => x.item);
+        }
+
+
+        /// <summary>
+        /// Returns true if there are no items in the sequence.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static bool None<T>(this IEnumerable<T> arr)
+        {
+            return !arr.Any();
+        }
+
+        /// <summary>
+        /// Returns true if none of the items in the sequence meet the condition.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static bool None<T>(this IEnumerable<T> arr, Func<T, bool> f)
+        {
+            return !arr.Any(f);
+        }
+
+        /// <summary>
+        /// Returns all elements of a sequence that do not match the predicate.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> arr, Func<T, bool> f)
+        {
+            return arr.Where(f.Not());
+        }
+
+        /// <summary>
+        /// Returns all elements of a sequence that do not match the predicate.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static Task<IEnumerable<T>> WhereNotAsync<T>(this IEnumerable<T> arr, Func<T, Task<bool>> f)
+        {
+            return arr.WhereAsync(async x => !await f(x));
         }
     }
 }
