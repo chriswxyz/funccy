@@ -105,5 +105,18 @@ namespace Funccy
         {
             return arr.WhereAsync(async x => !await f(x));
         }
+
+        /// <summary>
+        /// Projects each element of a sequence into a new array.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TNext"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static TNext[] SelectArray<T, TNext>(this IEnumerable<T> arr, Func<T, TNext> f)
+        {
+            return arr.Select(f).ToArray();
+        }
     }
 }

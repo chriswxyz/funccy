@@ -17,7 +17,7 @@ namespace Funccy.Tests
                     x => beerService.Exists(x.BeerId),
                     x => new BeerValidation(404, $"Beer {x.BeerId} not found"))
                 .Must(
-                    x => x.Kind.IsIn(new[] { "glass", "growler" }),
+                    x => x.Kind.IsIn("glass", "growler"),
                     x => new BeerValidation(409, $"Unknown vessel: {x.Kind}"))
                 .When(
                     x => x.Kind == "glass",
@@ -67,9 +67,9 @@ namespace Funccy.Tests
             public Task<bool> Exists(int beerId)
             {
                 // pretend to get from a DB
-                return new[] { 1, 2, 3, 4, 5 }
-                    .Contains(beerId)
-                    .TaskFromResult();
+                return beerId
+                    .IsIn(1, 2, 3, 4, 5)
+                    .Defer();
             }
         }
 

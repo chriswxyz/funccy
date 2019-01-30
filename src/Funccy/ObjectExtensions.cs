@@ -61,7 +61,7 @@ namespace Funccy
         /// <returns></returns>
         public static Func<T, Task<U>> Defer<T, U>(this Func<T, U> f)
         {
-            return x => f(x).TaskFromResult();
+            return x => f(x).Defer();
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Funccy
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static Task<T> TaskFromResult<T>(this T t) { return Task.FromResult(t); }
+        public static Task<T> Defer<T>(this T t) { return Task.FromResult(t); }
 
         /// <summary>
         /// Casts the result of a task to a specific type.
@@ -116,6 +116,18 @@ namespace Funccy
         /// <param name="arr"></param>
         /// <returns></returns>
         public static bool IsIn<T>(this T obj, IEnumerable<T> arr)
+        {
+            return arr.Contains(obj);
+        }
+
+        /// <summary>
+        /// If the object is in a list of values.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static bool IsIn<T>(this T obj, params T[] arr)
         {
             return arr.Contains(obj);
         }

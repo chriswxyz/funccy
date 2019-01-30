@@ -30,9 +30,7 @@ namespace Funccy
             Func<TData, bool> pred,
             Func<Validate<TData, TErr>, Validate<TData, TErr>> rules)
         {
-            var rule = new ConditionAsync(pred.Defer(), rules);
-            asyncConditions.Add(rule);
-            return this;
+            return When(pred.Defer(), rules);
         }
 
         /// <summary>
@@ -63,12 +61,7 @@ namespace Funccy
             Func<TResult, bool> getSuccess,
             Func<Validate<TData, TErr>, TResult, Validate<TData, TErr>> rules)
         {
-            var rule = new ConditionResultAsync(
-                model => getResult.Defer()(model).CastTask<TResult, object>(),
-                result => getSuccess((TResult)result),
-                (v, result) => rules(v, (TResult)result));
-            asyncResultConditions.Add(rule);
-            return this;
+            return When(getResult.Defer(), getSuccess, rules);
         }
 
         /// <summary>
@@ -105,12 +98,7 @@ namespace Funccy
             Func<TResult, bool> getSuccess,
             Func<TData, TResult, TErr> describe)
         {
-            var rule = new ResultRuleAsync(
-                getResult.CastReturn<TData, TResult, object>().Defer(),
-                result => getSuccess((TResult)result),
-                (model, result) => describe(model, (TResult)result));
-            asyncResultRules.Add(rule);
-            return this;
+            return Must(getResult.Defer(), getSuccess, describe);
         }
 
         /// <summary>
@@ -144,9 +132,7 @@ namespace Funccy
             Func<TData, bool> pred,
             Func<TData, TErr> description)
         {
-            var rule = new SimpleRuleAsync(pred.Defer(), description);
-            simpleAsyncRules.Add(rule);
-            return this;
+            return Must(pred.Defer(), description);
         }
 
         /// <summary>
@@ -229,23 +215,23 @@ namespace Funccy
                 }
             }
 
-            var specificErrors = (await subvalidator.Check(model))
+            var specificFailures = (await subvalidator.Check(model))
                 .Extract(a => new TErr[0], b => b);
 
             // 2. check mixed-in validation
 
-            var composedErrors = (await composedValidators
+            var composedFailures = (await composedValidators
                 .Select(x => x.Checker(model))
                 .WhenAll())
                 .SelectMany(x => x);
 
             // 3. Check the actual rules
 
-            var failed2 = (await simpleAsyncRules
+            var simpleFailures = (await simpleAsyncRules
                 .WhereNotAsync(x => x.Pred(model)))
                 .Select(x => x.Describe(model));
 
-            var failed4 = (await (await asyncResultRules
+            var resultFailures = (await (await asyncResultRules
                 .Select(x => x.GetResultPlusSuccess(model))
                 .WhereNotAsync(async x => (await x).Success))
                 .WhenAll())
@@ -253,10 +239,10 @@ namespace Funccy
 
             // 4. tally and report
 
-            var allErrors = specificErrors
-                .Concat(composedErrors)
-                .Concat(failed2)
-                .Concat(failed4)
+            var allErrors = specificFailures
+                .Concat(composedFailures)
+                .Concat(simpleFailures)
+                .Concat(resultFailures)
                 .ToArray();
 
             if (allErrors.None())
