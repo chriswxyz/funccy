@@ -11,6 +11,7 @@
 
 		<PackageReleaseNotes></PackageReleaseNotes>
 		<Version>0.0.1</Version>
+		<LangVersion>7.1</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Funccy.Tests
@@ -35,10 +36,7 @@ namespace Funccy.Tests
     {
         public List<string> _log = new List<string>();
 
-        public void Info(string message)
-        {
-            _log.Add(message);
-        }
+        public void Info(string message) => _log.Add(message);
 
         public string Log => string.Join(", ", _log);
     }
