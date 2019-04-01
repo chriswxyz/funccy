@@ -11,12 +11,7 @@ namespace Funccy
         /// <typeparam name="T"></typeparam>
         /// <param name="coll"></param>
         /// <returns></returns>
-        public static Maybe<NonemptyList<T>> AsNonemptyList<T>(this IEnumerable<T> coll)
-        {
-            var first = coll.FirstMaybe();
-            var rest = coll.Rest();
-
-            return first.Map(x => new NonemptyList<T>(x, rest));
-        }
+        public static Maybe<NonemptyList<T>> AsNonemptyList<T>(this IEnumerable<T> coll) => 
+            coll.FirstMaybe().Map(x => new NonemptyList<T>(x, coll.Rest()));
     }
 }

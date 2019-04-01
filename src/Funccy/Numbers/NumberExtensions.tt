@@ -18,13 +18,21 @@ namespace Funccy
 	public static class NumberExtensions
 	{
 <# foreach (var type in types) { #>
+		/// <summary>
+        /// If the source is within a certain tolerance of the target.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
 		public static bool IsNear(this <#= type.Name #> source, <#= type.Name #> target, <#= type.Name #> tolerance)
 		{
 			var upper = target + tolerance;
-			var lower = target - tolerance;
-		
 			if(source > upper){ return false; }
+
+			var lower = target - tolerance;
 			if(source < lower){ return false; }
+
 			return true;
 		}
 

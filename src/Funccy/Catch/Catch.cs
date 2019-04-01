@@ -11,7 +11,6 @@ namespace Funccy
     {
         private readonly TValue _value;
         private readonly TException _ex;
-        private readonly bool _hasEx;
 
         /// <summary>
         /// Creates a new Catch for an object.
@@ -20,15 +19,13 @@ namespace Funccy
         public Catch(TValue value)
         {
             _value = value;
-            _hasEx = false;
         }
 
         public Catch(TException ex)
         {
             _ex = ex;
-            _hasEx = true;
         }
-        
+
         /// <summary>
         /// Tries an operation and returns the result or the caught exception.
         /// </summary>
@@ -57,9 +54,7 @@ namespace Funccy
             _value = value;
         }
 
-        public Catch<TValue, TException> Handle<TException>() where TException : Exception
-        {
-            return new Catch<TValue, TException>(_value);
-        }
+        public Catch<TValue, TException> Handle<TException>() where TException : Exception =>
+            new Catch<TValue, TException>(_value);
     }
 }
