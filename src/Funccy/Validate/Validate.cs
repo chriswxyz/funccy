@@ -30,7 +30,7 @@ namespace Funccy
             Func<TData, bool> pred,
             Func<Validate<TData, TErr>, Validate<TData, TErr>> rules)
         {
-            return When(pred.Defer(), rules);
+            return WhenAsync(pred.Defer(), rules);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Funccy
         /// <param name="pred"></param>
         /// <param name="rules"></param>
         /// <returns></returns>
-        public Validate<TData, TErr> When(
+        public Validate<TData, TErr> WhenAsync(
             Func<TData, Task<bool>> pred,
             Func<Validate<TData, TErr>, Validate<TData, TErr>> rules)
         {
@@ -61,7 +61,7 @@ namespace Funccy
             Func<TResult, bool> getSuccess,
             Func<Validate<TData, TErr>, TResult, Validate<TData, TErr>> rules)
         {
-            return When(getResult.Defer(), getSuccess, rules);
+            return WhenAsync(getResult.Defer(), getSuccess, rules);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Funccy
         /// <param name="getSuccess"></param>
         /// <param name="rules"></param>
         /// <returns></returns>
-        public Validate<TData, TErr> When<TResult>(
+        public Validate<TData, TErr> WhenAsync<TResult>(
             Func<TData, Task<TResult>> getResult,
             Func<TResult, bool> getSuccess,
             Func<Validate<TData, TErr>, TResult, Validate<TData, TErr>> rules)
@@ -98,7 +98,7 @@ namespace Funccy
             Func<TResult, bool> getSuccess,
             Func<TData, TResult, TErr> describe)
         {
-            return Must(getResult.Defer(), getSuccess, describe);
+            return MustAsync(getResult.Defer(), getSuccess, describe);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Funccy
         /// <param name="getSuccess"></param>
         /// <param name="describe"></param>
         /// <returns></returns>
-        public Validate<TData, TErr> Must<TResult>(
+        public Validate<TData, TErr> MustAsync<TResult>(
             Func<TData, Task<TResult>> getResult,
             Func<TResult, bool> getSuccess,
             Func<TData, TResult, TErr> describe)
@@ -132,7 +132,7 @@ namespace Funccy
             Func<TData, bool> pred,
             Func<TData, TErr> description)
         {
-            return Must(pred.Defer(), description);
+            return MustAsync(pred.Defer(), description);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Funccy
         /// <param name="pred"></param>
         /// <param name="describe"></param>
         /// <returns></returns>
-        public Validate<TData, TErr> Must(
+        public Validate<TData, TErr> MustAsync(
             Func<TData, Task<bool>> pred,
             Func<TData, TErr> describe)
         {
