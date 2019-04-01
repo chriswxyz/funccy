@@ -13,9 +13,11 @@ namespace Funccy.Tests
         {
             var beerService = new BeerService();
             var validator = new Validate<DispenseBeerCommand, BeerValidation>()
-                .Must(
-                    x => beerService.Exists(x.BeerId),
-                    x => new BeerValidation(404, $"Beer {x.BeerId} not found"))
+				.MustAsync(
+					x => beerService.GetById(x.BeerId),
+					x => x != null,
+					(x, o) => new BeerValidation(404, $"Beer {x.BeerId} not found")
+				)
                 .Must(
                     x => x.Kind.IsIn("glass", "growler"),
                     x => new BeerValidation(409, $"Unknown vessel: {x.Kind}"))
@@ -64,14 +66,15 @@ namespace Funccy.Tests
 
         public class BeerService
         {
-            public Task<bool> Exists(int beerId)
-            {
-                // pretend to get from a DB
-                return beerId
-                    .IsIn(1, 2, 3, 4, 5)
-                    .Defer();
-            }
-        }
+			public Task<Beer> GetById(int beerId)
+			{
+				// pretend to get from a DB
+				return beerId.IsIn(1, 2, 3, 4, 5)
+					? Task.FromResult(new Beer { Name = $"Beer {beerId}" })
+					: Task.FromResult(null as Beer);
+
+			}
+		}
 
         public class BeerValidation
         {
@@ -89,5 +92,10 @@ namespace Funccy.Tests
         {
             return $"({x.Code}) {x.MoreInfo}";
         }
+
+		public class Beer
+		{
+			public string Name { get; set; }
+		}
     }
 }
