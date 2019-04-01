@@ -8,9 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{F36F7946-228C-41A4-9FAB-5588927F9AC1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3CCB9B2F-843C-4A3F-8EFC-A35702994A36}"
-	ProjectSection(SolutionItems) = preProject
-		appveyor.yml = appveyor.yml
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Funccy.Tests", "test\Funccy.Tests\Funccy.Tests.csproj", "{3C48EE8A-F34F-46C6-AE56-5553FC3E1A39}"
 EndProject
