@@ -28,10 +28,8 @@ namespace Funccy
             _timeSpan = timeSpan;
         }
 
-        public async Task<T> Run<T>(Func<T> action)
-        {
-            return await Run(action, CancellationToken.None);
-        }
+        public async Task<T> Run<T>(Func<T> action) =>
+            await Run(action, CancellationToken.None);
 
         public async Task<T> Run<T>(Func<T> action, CancellationToken cancel)
         {
@@ -55,10 +53,8 @@ namespace Funccy
             }
         }
 
-        public async Task<T> Run<T>(Func<Task<T>> action)
-        {
-            return await Run(action, CancellationToken.None);
-        }
+        public async Task<T> Run<T>(Func<Task<T>> action) =>
+            await Run(action, CancellationToken.None);
 
         public async Task<T> Run<T>(Func<Task<T>> action, CancellationToken cancel)
         {

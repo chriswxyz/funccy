@@ -35,6 +35,14 @@ namespace Funccy
 
         }
 
+        public static IEnumerable<TNext> ExtractAll<TA, TB, TNext>(
+            this IEnumerable<OneOf<TA, TB>> oneOfs,
+            Func<TA, TNext> a,
+            Func<TB, TNext> b)
+        {
+            return oneOfs.Select(x => x.Extract(a, b));
+        }
+
         /// <summary>
         /// Splits the elements of the collection based on type.
         /// </summary>

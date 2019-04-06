@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Linq;
 using Xunit;
 
 namespace Funccy.Tests
@@ -10,17 +11,13 @@ namespace Funccy.Tests
         [Fact]
         public async Task RateLimiterLimitsRate()
         {
-            var stopwatch = new Stopwatch();
-
             var limiter = new RateLimiter(3, TimeSpan.FromSeconds(1));
 
             var nums = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-            stopwatch.Start();
+            var stopwatch = Stopwatch.StartNew();
 
-            var results = await nums.Select(
-                x => stopwatch.ElapsedMilliseconds,
-                limiter);
+            var results = await nums.Select(limiter, x => stopwatch.ElapsedMilliseconds);
 
             stopwatch.Stop();
 
@@ -40,22 +37,20 @@ namespace Funccy.Tests
         [Fact]
         public async Task ConcurrentLimiterLimitsConcurrency()
         {
-            var stopwatch = new Stopwatch();
-
             var limiter = new ConcurrentLimiter(3);
 
             var nums = new[] { 1, 2, 3, 4 };
 
-            stopwatch.Start();
+            var stopwatch = Stopwatch.StartNew();
 
             var results = await nums.Select(
+                limiter,
                 async x =>
                 {
                     var time = stopwatch.ElapsedMilliseconds;
                     await Task.Delay(500);
                     return time;
-                },
-                limiter);
+                });
 
             stopwatch.Stop();
 
