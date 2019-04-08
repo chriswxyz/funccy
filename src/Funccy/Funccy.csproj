@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netstandard1.4</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
 
 		<Title>Funccy</Title>
 		<Description>Functional data structures for C#</Description>
@@ -10,11 +10,13 @@
 		<PackageProjectUrl>https://github.com/chriswxyz/funccy</PackageProjectUrl>
 
 		<PackageReleaseNotes></PackageReleaseNotes>
-		<Version>0.0.3</Version>
+		<Version>0.0.4</Version>
 		<LangVersion>7.1</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
 		<PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
 		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
@@ -23,10 +25,6 @@
 		<None Update="Numbers\NumberExtensions.tt">
 			<LastGenOutput>NumberExtensions.cs</LastGenOutput>
 			<Generator>TextTemplatingFileGenerator</Generator>
-		</None>
-		<None Update="OneOf\OneOf.tt">
-			<Generator>TextTemplatingFileGenerator</Generator>
-			<LastGenOutput>OneOf.cs</LastGenOutput>
 		</None>
 	</ItemGroup>
 
@@ -39,11 +37,6 @@
 			<DependentUpon>NumberExtensions.tt</DependentUpon>
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
-		</Compile>
-		<Compile Update="OneOf\OneOf.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>OneOf.tt</DependentUpon>
 		</Compile>
 	</ItemGroup>
 

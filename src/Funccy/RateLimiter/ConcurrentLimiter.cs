@@ -22,10 +22,8 @@ namespace Funccy
             _actions = new SemaphoreSlim(actions, actions);
         }
 
-        public async Task<T> Run<T>(Func<T> action)
-        {
-            return await Run(action, CancellationToken.None);
-        }
+        public Task<T> Run<T>(Func<T> action) =>
+            Run(action, CancellationToken.None);
 
         public async Task<T> Run<T>(Func<T> action, CancellationToken cancel)
         {
@@ -41,10 +39,8 @@ namespace Funccy
             }
         }
 
-        public async Task<T> Run<T>(Func<Task<T>> action)
-        {
-            return await Run(action, CancellationToken.None);
-        }
+        public Task<T> Run<T>(Func<Task<T>> action) =>
+            Run(action, CancellationToken.None);
 
         public async Task<T> Run<T>(Func<Task<T>> action, CancellationToken cancel)
         {

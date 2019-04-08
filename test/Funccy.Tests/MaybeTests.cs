@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Newtonsoft.Json;
+using System.Linq;
 using Xunit;
 
 namespace Funccy.Tests
@@ -96,5 +97,36 @@ namespace Funccy.Tests
             Assert.True(HasValue(some1));
             Assert.True(HasValue(some2));
         }
+
+        [Fact]
+        public void Maybe_Serializes_Objects()
+        {
+            var converter = new MaybeConverter();
+
+            var expectedJust = "{\"F\":123}";
+            var just = new Maybe<Foo>(new Foo { F = 123 });
+            var actualJust = JsonConvert.SerializeObject(just, Formatting.None, converter);
+
+            var expectedNone = "null";
+            var none = new Maybe<Foo>();
+            var actualNone = JsonConvert.SerializeObject(none, Formatting.None, converter);
+
+            var expectedInt = "789";
+            var justInt = new Maybe<int>(789);
+            var actualInt = JsonConvert.SerializeObject(justInt, Formatting.None, converter);
+
+            var actualReadFoo = JsonConvert.DeserializeObject<Maybe<Foo>>("{\"F\":999}", converter);
+            var actualReadNone = JsonConvert.DeserializeObject<Maybe<Foo>>("null", converter);
+            var actualReadInt = JsonConvert.DeserializeObject<Maybe<int>>("456", converter);
+
+            Assert.Equal(expectedJust, actualJust);
+            Assert.Equal(expectedNone, actualNone);
+            Assert.Equal(expectedInt, actualInt);
+            Assert.Equal(-1, actualReadNone.Map(x => x.F).Extract(-1));
+            Assert.Equal(999, actualReadFoo.Map(x => x.F).Extract(-1));
+            Assert.Equal(456, actualReadInt.Extract(-1));
+        }
+
+        public class Foo { public int F { get; set; } }
     }
 }

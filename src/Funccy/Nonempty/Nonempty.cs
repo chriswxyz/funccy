@@ -155,15 +155,15 @@ namespace Funccy
                 .AddRange(rest);
         }
 
-        public int IndexOf(T item, int index, int count, IEqualityComparer<T> equalityComparer)
-        {
-            return _list.IndexOf(item, index, count, equalityComparer);
-        }
+        public int IndexOf(T item, int index, int count, IEqualityComparer<T> equalityComparer) =>
+            _list.IndexOf(item, index, count, equalityComparer);
 
-        public int LastIndexOf(T item, int index, int count, IEqualityComparer<T> equalityComparer)
-        {
-            return _list.LastIndexOf(item, index, count, equalityComparer);
-        }
+        public int LastIndexOf(
+            T item,
+            int index,
+            int count,
+            IEqualityComparer<T> equalityComparer) =>
+                _list.LastIndexOf(item, index, count, equalityComparer);
 
         public INonemptyList<T> Add(T value)
         {
@@ -193,30 +193,20 @@ namespace Funccy
                 .Extract(() => throw new InvalidOperationException());
         }
 
-        public IImmutableList<T> Remove(T value, IEqualityComparer<T> equalityComparer)
-        {
-            return _list.Remove(value, equalityComparer);
-        }
+        public IImmutableList<T> Remove(T value, IEqualityComparer<T> equalityComparer) =>
+            _list.Remove(value, equalityComparer);
 
-        public IImmutableList<T> RemoveAll(Predicate<T> match)
-        {
-            return _list.RemoveAll(match);
-        }
+        public IImmutableList<T> RemoveAll(Predicate<T> match) => _list.RemoveAll(match);
 
-        public IImmutableList<T> RemoveRange(IEnumerable<T> items, IEqualityComparer<T> equalityComparer)
-        {
-            return _list.RemoveRange(items, equalityComparer);
-        }
+        public IImmutableList<T> RemoveRange(
+            IEnumerable<T> items,
+            IEqualityComparer<T> equalityComparer) =>
+                _list.RemoveRange(items, equalityComparer);
 
-        public IImmutableList<T> RemoveRange(int index, int count)
-        {
-            return _list.RemoveRange(index, count);
-        }
+        public IImmutableList<T> RemoveRange(int index, int count) =>
+            _list.RemoveRange(index, count);
 
-        public IImmutableList<T> RemoveAt(int index)
-        {
-            return _list.RemoveAt(index);
-        }
+        public IImmutableList<T> RemoveAt(int index) => _list.RemoveAt(index);
 
         public INonemptyList<T> SetItem(int index, T value)
         {
@@ -225,21 +215,18 @@ namespace Funccy
                 .Extract(() => throw new InvalidOperationException());
         }
 
-        public INonemptyList<T> Replace(T oldValue, T newValue, IEqualityComparer<T> equalityComparer)
+        public INonemptyList<T> Replace(
+            T oldValue,
+            T newValue,
+            IEqualityComparer<T> equalityComparer)
         {
             return _list.Replace(oldValue, newValue, equalityComparer)
                 .AsNonemptyList()
                 .Extract(() => throw new InvalidOperationException());
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return _list.GetEnumerator();
-        }
+        public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _list.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => _list.GetEnumerator();
     }
 }

@@ -13,20 +13,14 @@ namespace Funccy
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="U"></typeparam>
         /// <param name="arr"></param>
-        /// <param name="f"></param>
         /// <param name="limiter"></param>
+        /// <param name="f"></param>
         /// <returns></returns>
-        public static async Task<U[]> Select<T, U>(
+        public static Task<U[]> Select<T, U>(
             this IEnumerable<T> arr,
-            Func<T, U> f,
-            ILimiter limiter)
-        {
-            var tasks = arr.Select(x => limiter.Run(() => f(x)));
-
-            var results = await Task.WhenAll(tasks);
-
-            return results;
-        }
+            ILimiter limiter,
+            Func<T, U> f
+        ) => arr.Select(x => limiter.Run(() => f(x))).WhenAll();
 
         /// <summary>
         /// Rate limits a collection mapping.
@@ -34,19 +28,43 @@ namespace Funccy
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="U"></typeparam>
         /// <param name="arr"></param>
-        /// <param name="f"></param>
         /// <param name="limiter"></param>
+        /// <param name="f"></param>
         /// <returns></returns>
-        public static async Task<U[]> Select<T, U>(
+        public static Task<U[]> Select<T, U>(
             this IEnumerable<T> arr,
-            Func<T, Task<U>> f,
-            ILimiter limiter)
-        {
-            var tasks = arr.Select(x => limiter.Run(() => f(x)));
+            ILimiter limiter,
+            Func<T, int, U> f
+        ) => arr.Select((x, i) => limiter.Run(() => f(x, i))).WhenAll();
 
-            var results = await Task.WhenAll(tasks);
+        /// <summary>
+        /// Rate limits a collection mapping.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="limiter"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static Task<U[]> Select<T, U>(
+            this IEnumerable<T> arr,
+            ILimiter limiter,
+            Func<T, Task<U>> f
+        ) => arr.Select(x => limiter.Run(() => f(x))).WhenAll();
 
-            return results;
-        }
+        /// <summary>
+        /// Rate limits a collection mapping.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="limiter"></param>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static Task<U[]> Select<T, U>(
+            this IEnumerable<T> arr,
+            ILimiter limiter,
+            Func<T, int, Task<U>> f
+        ) => arr.Select((x, i) => limiter.Run(() => f(x, i))).WhenAll();
     }
 }

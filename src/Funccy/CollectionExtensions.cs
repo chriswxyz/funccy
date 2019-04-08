@@ -13,7 +13,7 @@ namespace Funccy
         /// <typeparam name="T"></typeparam>
         /// <param name="coll"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<T>> WhenAll<T>(this IEnumerable<Task<T>> coll) =>
+        public static async Task<T[]> WhenAll<T>(this IEnumerable<Task<T>> coll) =>
             await Task.WhenAll(coll);
 
         /// <summary>
