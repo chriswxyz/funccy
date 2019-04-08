@@ -10,7 +10,7 @@
 		<PackageProjectUrl>https://github.com/chriswxyz/funccy</PackageProjectUrl>
 
 		<PackageReleaseNotes></PackageReleaseNotes>
-		<Version>0.0.4</Version>
+		<Version>0.0.5</Version>
 		<LangVersion>7.1</LangVersion>
 	</PropertyGroup>
 
